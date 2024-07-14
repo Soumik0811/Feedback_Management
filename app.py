@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash,check_password_hash
 import requests
 from supabase import supabase
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'user=postgres.lhcpvlzksihcncnuoelx password=[LONdonwnpl.123] host=aws-0-ap-southeast-1.pooler.supabase.com port=5432 dbname=postgres'
+app.config['SECRET_KEY'] = 'Your secret key'
 
 
 
@@ -29,26 +29,10 @@ def feedback():
         print(feed)
         print(mail)
         data = supabase.table('feedback').insert({"name":name,"email": mail,"feedback_text":feed, "phone":phone,"satisfaction":satisfy, "product":feedback_type,"sp_name":service_name}).execute()
-        # send_feedback_email(mail, name)
         return render_template('thank_you.html')
 
     return render_template('feedback.html')
-
-def send_feedback_email(recipient_email, name):
-    url = "https://api.zeptomail.in/v1.1/email"
-    payload = {
-        "from": { "address": "pameshsharma87@gmail.com"},
-        "to": [{"email_address": {"address": recipient_email, "name": name}}],
-        "subject": "Test Email",
-        "htmlbody": "<div><b>Test email sent successfully.</b></div>"
-    }
-    headers = {
-        'accept': "application/json",
-        'content-type': "application/json",
-        'authorization': "Zoho-enczapikey PHtE6r0NELy52m4t8hlT5qW8QMGnYI56qelifVYW4opBWaBXHk1XqNAsw2O0rxwrXaNBR/6Yz4htubKc57+AJmzuMD4eCmqyqK3sx/VYSPOZsbq6x00aslkYckHdU4XsdNFo3SXWudzYNA==",
-    }
-    response = requests.post(url, json=payload, headers=headers)
-    print(response.text)   
+  
 
 @app.route('/signup', methods=['POST'])
 def signup():
