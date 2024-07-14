@@ -1,6 +1,6 @@
 from trycourier import Courier
 
-client = Courier(auth_token="pk_prod_5CHPPPPC914Q8GP1AGB11EYHCC26")
+client = Courier(auth_token="Your authentication token")
 
 resp = client.send_message(
         message={
